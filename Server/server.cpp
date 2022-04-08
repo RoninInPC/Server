@@ -115,10 +115,11 @@ void Server::send_file(list<SOCKET>::iterator it)
 	char* str = new char[save_message_size * 4];
 	while (!F.eof()) {
 		F.getline(str, save_message_size * sizeof(char));
-		if (F.eof())break;
-		send_int(1,it);
 		string send(str);
-		send_message(send,it);
+		if (send.size() != 0) {
+			send_int(1, it);
+			send_message(send, it);
+		}
 	}
 	send_int(0,it);
 	F.close();
